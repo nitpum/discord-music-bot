@@ -3,9 +3,9 @@ const { SlashCommand } = require('slash-create');
 module.exports = class extends SlashCommand {
     constructor(creator) {
         super(creator, {
-            name: 'shuffle',
-            description: 'Shuffle the queue',
-
+            name: 'clear',
+            description: 'Clear the current queue.',
+            
             guildIDs: process.env.DISCORD_GUILD_ID ? [ process.env.DISCORD_GUILD_ID ] : undefined
         });
     }
@@ -17,10 +17,10 @@ module.exports = class extends SlashCommand {
         await ctx.defer();
 
         const queue = client.player.getQueue(ctx.guildID);
-        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: '❌ | No music is being played!' });
+        if (!queue) return void ctx.sendFollowUp({ content: '❌ | No music in the queue!' });
         
-        await queue.shuffle();
-        
-        ctx.sendFollowUp({ content: '✅ | Queue has been shuffled!' });
+        queue.clear();
+
+        ctx.sendFollowUp({ content: '❌ | Queue cleared.' });
     }
 };

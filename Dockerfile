@@ -5,5 +5,5 @@ RUN apk add ffmpeg
 COPY . .
 RUN yarn
 
-CMD node .
+CMD yarn start
 
